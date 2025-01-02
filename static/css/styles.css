@@ -1,0 +1,281 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+/* Top Navigation Bar */
+.top-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #e0f0ff; /* Light blue background */
+    padding: 40px 0; /* Increased padding for a larger bar */
+    border-bottom: 2px solid #6a0dad;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #6a0dad; /* Purple icon color */
+    font-size: 3rem; /* Larger icons */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 30px; /* Add spacing between icons */
+}
+
+.nav-item:hover {
+    color: #004aad; /* Darker blue on hover */
+}
+
+.icon {
+    font-size: 4rem; /* Increased size for the icons */
+}
+
+/* Main Container */
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+/* Title Box */
+.title-box {
+    background-color: #d4edda; /* Light green background */
+    border: 1px solid #28a745; /* Green border */
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.title-box .logo {
+    width: 150px;
+    height: auto;
+}
+
+/* Form Styling */
+.login-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Product Container */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 2-3 items per row */
+    gap: 20px; /* Space between cards */
+    padding: 20px;
+    justify-content: center;
+}
+
+/* Product Card */
+.product-card {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+ 
+.product-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover; /* Ensures the image is scaled and cropped proportionally */
+    border-radius: 10px; /* Optional: Adds rounded corners */
+    margin: 5px auto; /* Center-align the image */
+    display: block; /* Centers the image in the card */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Links Styling */
+.extra-links {
+    margin-top: 10px;
+}
+
+.extra-links a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+/* Flash Messages */
+.flash-messages p {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}
+
+/* Buttons Container in the Product Card */
+.product-card .buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.product-card .info-btn,
+.product-card .cart-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: #004aad; /* Icon color */
+}
+
+.product-card .info-btn:hover {
+    color: #388E3C; /* Hover color for info icon */
+}
+
+.product-card .cart-btn:hover {
+    color: #F57C00; /* Hover color for cart icon */
+}
+
+/* Search Bar Styling */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px; /* Increase the maximum width */
+    margin: 0 auto; /* Centered horizontally */
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Search Bar Input Field */
+.search-bar input {
+    flex: 1;
+    padding: 10px; /* Increase padding for larger input field */
+    font-size: 1.5rem; /* Larger font size */
+    border: none;
+    outline: none;
+}
+
+/* Search Button */
+.search-bar button {
+    background-color: #004aad; /* Darker blue for the button */
+    color: white;
+    border: none;
+    padding: 10px; /* Increase padding for a larger button */
+    cursor: pointer;
+    font-size: 1.5rem; /* Larger font size for the button */
+}
+
+.search-bar button:hover {
+    background-color: #003380; /* Darker hover color */
+}
+
+
+
+.flash-messages {
+    margin: 20px auto;
+    max-width: 500px;
+    text-align: center;
+}
+
+.flash-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.flash-message.error {
+    background-color: #ffcccc;
+    color: #cc0000;
+}
+
+
+.extra-search-bar {
+    display: none; /* Hide unwanted elements */
+}
+
+
+/* Profile Section */
+.profile-section {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile-details {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 200px;
+    text-align: left;
+    z-index: 100;
+}
+
+.profile-details p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.profile-details .logout-button {
+    display: block;
+    text-decoration: none;
+    background-color: #ff5252;
+    color: white;
+    padding: 8px 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.profile-details .logout-button:hover {
+    background-color: #e53935;
+}

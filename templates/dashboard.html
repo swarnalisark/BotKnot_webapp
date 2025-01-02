@@ -1,0 +1,337 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Dashboard</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Container for the Search Section */
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #6a0dad; /* Purple background */
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .dashboard-main {
+            display: flex;
+            margin-top: 80px; /* Offset for the fixed search bar */
+            width: 100%;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            width: 70%;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background-color: #004aad; /* Darker blue for the button */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .search-bar button:hover {
+            background-color: #003380;
+        }
+
+        /* Right Navigation Section */
+        .right-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Space between icons */
+        }
+
+        /* Profile Section */
+        .profile-section {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            font-size: 1.5rem;
+            color: #fff;
+            background-color: #004aad;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .profile-details {
+            display: none; /* Initially hidden */
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .profile-details.visible {
+            display: block; /* Show when visible */
+        }
+
+        .profile-details p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .logout-link {
+            color: #ff5252;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .logout-link:hover {
+            color: #e53935;
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            color: #fff;
+            background-color: #004aad;
+            border-radius: 50%;
+            padding: 10px;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-icon:hover {
+            background-color: #003380;
+        }
+
+        /* Product Grid Container */
+        .product-list {
+            width: 60%;
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100vh - 80px); /* Subtract fixed header height */
+        }
+
+        .product-details {
+            width: 40%;
+            padding: 20px;
+            background-color: #fff;
+            border-left: 1px solid #ddd;
+            position: fixed;
+            top: 80px; /* Below the fixed search bar */
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        /* Product Card */
+        .product-card {
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-card h3 {
+            margin: 10px 0;
+        }
+
+        .product-card a {
+            text-decoration: none;
+            color: #004aad;
+            font-weight: bold;
+        }
+
+        .product-card a:hover {
+            color: #003380;
+        }
+
+        .product-details img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .product-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-details li {
+            margin-bottom: 10px;
+        }
+
+        .product-details h2 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Search Section -->
+    <div class="search-container">
+        <!-- Search Bar -->
+        <form method="GET" action="{{ url_for('dashboard', user_id=user_id) }}" class="search-bar">
+            <input type="text" name="search_query" placeholder="Search Products" value="{{ request.args.get('search_query', '') }}">
+            <button type="submit">&#x1F50D;</button> <!-- Search Icon -->
+        </form>
+
+        <!-- Right Navigation (Home, Cart, Profile) -->
+        <div class="right-nav">
+            <!-- Home Icon -->
+            <a href="{{ url_for('dashboard', user_id=user_id) }}" class="nav-icon" title="Home">
+                🏠
+            </a>
+
+            <!-- Cart Icon -->
+            <a href="{{ url_for('cart') }}" class="nav-icon" title="Cart">
+                🛒
+            </a>
+
+            <!-- Profile Section -->
+            <div class="profile-section" onclick="toggleProfileDetails()">
+                <div class="profile-icon">👤</div>
+                <div id="profile-details" class="profile-details">
+                    <p>User: {{ user_id }}</p>
+                    <p>Email: {{ user_id }}</p> <!-- Add more details if needed -->
+                    <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-main">
+        <!-- Product List Section -->
+        <div class="product-list">
+                        {% for product in products %}
+            <div class="product-card" id="product-{{ product.name|replace(' ', '-') }}"
+                onclick="location.href='{{ url_for('dashboard', user_id=user_id, product_name=product['name']) }}#product-{{ product.name|replace(' ', '-') }}'">
+                <img src="{{ url_for('static', filename=product.image.split('static/')[-1]) }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p>Today's Price: €{{ product.price }}</p>
+                <p>Tomorrow's Price: €{{ product.tomorrow_price }}</p>
+                <!-- Buttons -->
+                <div class="buttons">
+                    <!-- Info Button with Unicode Icon -->
+                    <a href="{{ url_for('info', product_name=product.name) }}" class="info-btn" style="font-size: 1.5rem;">&#9432;</a> <!-- Info Icon -->
+
+                    <!-- Cart Button with Unicode Icon -->
+                    <a href="{{ url_for('cart_add', product_name=product.name) }}" class="cart-btn" style="font-size: 1.5rem;">&#128722;</a> <!-- Cart Icon -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Product Details Section -->
+        <div class="product-details">
+            {% if selected_product %}
+            <h2>Details for {{ selected_product }}</h2>
+
+            {% if summary_data %}
+            <ul>
+                <li><strong>Serial Number:</strong> {{ summary_data.Serial_Number }}</li>
+                <li><strong>Item Code:</strong> {{ summary_data.Item_Code }}</li>
+                <li><strong>Price for Tomorrow:</strong> €{{ summary_data.Price_for_Tomorrow }}</li>
+                <li><strong>Price After 7 Days:</strong> €{{ summary_data.Price_After_7_Days }}</li>
+                <li><strong>Price After 1 Month:</strong> €{{ summary_data.Price_After_1_Month }}</li>
+            </ul>
+            {% endif %}
+
+            {% if plot_url %}
+            <h3>Price Trend</h3>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Price Trend">
+            {% endif %}
+
+            {% else %}
+            <p>Select a product to view its details.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Toggle profile details visibility
+        function toggleProfileDetails() {
+            const details = document.getElementById('profile-details');
+            details.classList.toggle('visible');
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productName = urlParams.get('product_name');
+            if (productName) {
+                const productElement = document.querySelector(`#product-${productName.replace(/\s+/g, '-')}`);
+                if (productElement) {
+                    productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

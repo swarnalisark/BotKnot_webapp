@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #444;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .summary, .plot {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 48%;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+        img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+            background: #fff;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #0066cc;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Details for {{ product_name }}</h1>
+
+    <div class="container">
+        <!-- Product Summary -->
+        <div class="summary">
+            <h2>Product Summary</h2>
+            <ul>
+                <li><strong>Serial Number:</strong> {{ summary_data.Serial_Number }}</li>
+                <li><strong>Item Code:</strong> {{ summary_data.Item_Code }}</li>
+                <li><strong>Price for Tomorrow:</strong> €{{ summary_data.Price_for_Tomorrow }}</li>
+                <li><strong>Price After 7 Days:</strong> €{{ summary_data.Price_After_7_Days }}</li>
+                <li><strong>Price After 1 Month:</strong> €{{ summary_data.Price_After_1_Month }}</li>
+            </ul>
+        </div>
+
+        <!-- Plot -->
+        <div class="plot">
+            <h2>Price Trend</h2>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Price Trend for {{ product_name }}">
+        </div>
+    </div>
+
+    <a href="{{ url_for('dashboard', user_id=session.get('user_id')) }}">← Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .cart-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .cart-item-info {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+        .cart-item-info h4 {
+            margin: 0 0 5px;
+        }
+        .cart-item-info p {
+            margin: 0;
+            color: #555;
+        }
+        .cart-buttons {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .cart-buttons button {
+            padding: 10px 20px;
+            background-color: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cart-buttons button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+        {% if cart %}
+            {% for item in cart %}
+            <div class="cart-item">
+                <img src="{{ url_for('static', filename=item.image.split('static/')[-1]) }}" alt="{{ item.name }}">
+                <div class="cart-item-info">
+                    <h4>{{ item.name }}</h4>
+                    <p>Price: €{{ item.price }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+        <div class="cart-buttons">
+            {% if cart %}
+            <a href="{{ url_for('cart_clear') }}"><button>Clear Cart</button></a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

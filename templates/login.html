@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>BotKnot Login</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Green Box for BotKnot Logo -->
+        <div class="title-box">
+            <img src="/static/images/free.png" alt="BotKnot Logo" class="logo">
+        </div>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Login Form -->
+        <div class="login-form">
+            <form method="POST" action="/login">
+                <label for="user_id">User ID:</label>
+                <input type="text" id="user_id" name="user_id" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <!-- Links -->
+        <p class="extra-links">
+            <a href="/signup">Sign Up</a> | <a href="/forgot-password">Forgot Password?</a>
+        </p>
+    </div>
+</body>
+</html>

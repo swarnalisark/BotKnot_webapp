@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <div class="logo">
+            <a href="{{ url_for('dashboard', user_id=session.get('user_id', '')) }}">BotKnot</a>
+        </div>
+        <div class="profile-section">
+            <div class="profile-icon" onclick="toggleProfileDetails()">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon">
+            </div>
+            <div class="profile-details" id="profile-details">
+                <p><strong>User:</strong> {{ session.get('user_id', 'Guest') }}</p>
+                <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+            </div>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+    <script>
+        // JavaScript function to toggle the profile details visibility
+        function toggleProfileDetails() {
+            const details = document.getElementById('profile-details');
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
